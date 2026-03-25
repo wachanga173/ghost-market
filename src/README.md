@@ -36,7 +36,7 @@ Ghost Market operates on four distributed technology pillars:
 
 ### Prerequisites
 - Node.js 18+ and npm
-- Ethereum wallet (MetaMask, WalletConnect, etc.)
+- Ethereum wallet
 - Git
 
 ### Installation
@@ -150,7 +150,7 @@ ghost-market/
 
 ### 1. User Registration (No Database)
 ```
-User → MetaMask Connect 
+User → Ethereum Wallet Connect 
      → Sign Message (SIWE)
      → User data published to Gun.js + IPFS
 ```

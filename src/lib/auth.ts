@@ -13,7 +13,7 @@ import { SiweMessage } from 'siwe';
 export const connectWallet = async (): Promise<string | null> => {
   try {
     if (!window.ethereum) {
-      alert('Please install MetaMask or another Ethereum wallet');
+      alert('Please install an Ethereum wallet');
       return null;
     }
 
