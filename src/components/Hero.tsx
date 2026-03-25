@@ -52,7 +52,7 @@ export default function Hero() {
       {/* Full-bleed hero background image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://rtvumsbcqxnqboosytgn.supabase.co/storage/v1/object/public/job-media/hero-images/heroimage.png"
+          src="https://rtvumsbcqxnqboosytgn.supabase.co/storage/v1/object/sign/job-media/heroimage.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zM2QzYzEyZC00ZmY0LTQ2OTAtYWU2Zi1kYWQ4NGM4MGJiOTQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJqb2ItbWVkaWEvaGVyb2ltYWdlLnBuZyIsImlhdCI6MTc3NDQ1MDY1NywiZXhwIjozMTcxMzQ0NTA2NTd9.ZgqEmysn42bmVNG8uHPykw4lE1PLVx3zKHXfSTAbaco"
           alt="Ghost Market background"
           fill
           priority
