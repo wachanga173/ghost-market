@@ -62,6 +62,21 @@ export interface GunJob {
 }
 
 /**
+ * Talent profile structure for discoverability in Find Talent
+ */
+export interface GunTalentProfile {
+  walletAddress: string;
+  displayName: string;
+  category: string;
+  skills: string[];
+  bio?: string;
+  contactDetails?: string;
+  availability?: 'open' | 'limited' | 'unavailable';
+  createdAt: number;
+  updatedAt: number;
+}
+
+/**
  * P2P Message structure using Gun.js SEA encryption
  */
 export interface EncryptedMessage {
@@ -234,6 +249,69 @@ export const updateUserProfile = async (
         console.log('Profile updated:', walletAddress);
       }
     });
+};
+
+/**
+ * Create or update a talent profile on Gun.js network
+ */
+export const postTalentProfileToNetwork = async (
+  talent: Omit<GunTalentProfile, 'createdAt' | 'updatedAt'>
+): Promise<string | null> => {
+  try {
+    const existing = await new Promise<GunTalentProfile | null>((resolve) => {
+      gun
+        .get('talents')
+        .get(talent.walletAddress)
+        .once((data) => {
+          resolve((data as GunTalentProfile) || null);
+        });
+    });
+
+    const profile: GunTalentProfile = {
+      ...talent,
+      createdAt: existing?.createdAt ?? Date.now(),
+      updatedAt: Date.now(),
+    };
+
+    gun
+      .get('talents')
+      .get(talent.walletAddress)
+      .put(profile, (ack) => {
+        if ('err' in ack && ack.err) {
+          console.error('Error posting talent profile:', ack.err);
+        } else {
+          console.log('Talent profile updated:', talent.walletAddress);
+        }
+      });
+
+    return talent.walletAddress;
+  } catch (error) {
+    console.error('Error in postTalentProfileToNetwork:', error);
+    return null;
+  }
+};
+
+/**
+ * Subscribe to all talent profiles on the network
+ */
+export const subscribeToTalents = (
+  callback: (talents: Record<string, GunTalentProfile>) => void
+): (() => void) => {
+  const talents: Record<string, GunTalentProfile> = {};
+
+  gun
+    .get('talents')
+    .map()
+    .on((talent: GunTalentProfile) => {
+      if (talent?.walletAddress) {
+        talents[talent.walletAddress] = talent;
+        callback(talents);
+      }
+    });
+
+  return () => {
+    gun.get('talents').off();
+  };
 };
 
 export default gun;

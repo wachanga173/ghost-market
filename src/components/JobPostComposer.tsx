@@ -10,6 +10,8 @@ const DEFAULT_SKILLS = ['React', 'TypeScript', 'Node.js', 'Solidity', 'UI/UX', '
 export default function JobPostComposer() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [contactDetails, setContactDetails] = useState('');
+  const [howToApply, setHowToApply] = useState('');
   const [budget, setBudget] = useState('500');
   const [skillsInput, setSkillsInput] = useState('React, TypeScript');
   const [paymentType, setPaymentType] = useState<'escrow' | 'milestone' | 'hourly'>('escrow');
@@ -43,14 +45,16 @@ export default function JobPostComposer() {
         .map((s) => s.trim())
         .filter(Boolean);
 
-      if (!title.trim() || !description.trim() || !skills.length) {
-        setResult('Title, description, and at least one skill are required.');
+      if (!title.trim() || !description.trim() || !skills.length || !contactDetails.trim()) {
+        setResult('Title, description, contact details, and at least one skill are required.');
         return;
       }
 
       const cid = await uploadJobDescription({
         title: title.trim(),
         description: description.trim(),
+        contactDetails: contactDetails.trim(),
+        howToApply: howToApply.trim() || 'Message the poster directly in Ghost Market.',
         requirements: skills,
         skills,
         budget: Number(budget) || 0,
@@ -85,6 +89,8 @@ export default function JobPostComposer() {
 
       setTitle('');
       setDescription('');
+      setContactDetails('');
+      setHowToApply('');
       setBudget('500');
       setSkillsInput('React, TypeScript');
       setResult(`Job posted successfully. Job ID: ${jobId}`);
@@ -97,7 +103,7 @@ export default function JobPostComposer() {
     <section className="rounded-xl border border-white/20 bg-white/5 p-6 backdrop-blur-md">
       <h2 className="text-2xl font-semibold text-white">Post A Job (P2P)</h2>
       <p className="mt-2 text-sm text-gray-400">
-        Step 1 uploads content to IPFS. Step 2 broadcasts CID to Gun.js.
+        Step 1 uploads content (including contact/apply details) to IPFS. Step 2 broadcasts CID to Gun.js.
       </p>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
@@ -115,6 +121,21 @@ export default function JobPostComposer() {
           rows={5}
           className="w-full rounded-lg border border-white/20 bg-black/30 px-4 py-3 text-white outline-none"
         />
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <input
+            value={contactDetails}
+            onChange={(e) => setContactDetails(e.target.value)}
+            placeholder="Contact details (email / Telegram / X / Discord)"
+            className="rounded-lg border border-white/20 bg-black/30 px-4 py-3 text-white outline-none"
+          />
+          <input
+            value={howToApply}
+            onChange={(e) => setHowToApply(e.target.value)}
+            placeholder="How to apply (optional)"
+            className="rounded-lg border border-white/20 bg-black/30 px-4 py-3 text-white outline-none"
+          />
+        </div>
 
         <div className="grid gap-4 md:grid-cols-3">
           <input

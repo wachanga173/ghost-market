@@ -24,10 +24,16 @@ interface JobPageProps {
   params: Promise<{ id: string }>;
 }
 
+interface JobDetailsFromIPFS {
+  description?: string;
+  contactDetails?: string;
+  howToApply?: string;
+}
+
 export default function JobDetailPage({ params }: JobPageProps) {
   const [jobId, setJobId] = useState<string>('');
   const [job, setJob] = useState<GunJob | null>(null);
-  const [description, setDescription] = useState<string>('');
+  const [jobDetails, setJobDetails] = useState<JobDetailsFromIPFS>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -51,9 +57,9 @@ export default function JobDetailPage({ params }: JobPageProps) {
         setJob(data);
 
         if (data.metadata?.ipfsHash) {
-          const full = await getJobDescriptionFromIPFS(data.metadata.ipfsHash);
-          if (active && full?.description) {
-            setDescription(full.description);
+          const full = await getJobDescriptionFromIPFS(data.metadata.ipfsHash) as JobDetailsFromIPFS | null;
+          if (active && full) {
+            setJobDetails(full);
           }
         }
 
@@ -115,8 +121,23 @@ export default function JobDetailPage({ params }: JobPageProps) {
           <div className="mt-6">
             <p className="text-sm text-gray-400">Description (IPFS)</p>
             <p className="mt-2 whitespace-pre-wrap text-gray-200">
-              {description || 'Description not yet available from current gateway.'}
+              {jobDetails.description || 'Description not yet available from current gateway.'}
             </p>
+          </div>
+
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <div className="rounded-lg border border-white/15 bg-black/30 p-4">
+              <p className="text-xs text-gray-400">Contact Details</p>
+              <p className="mt-1 whitespace-pre-wrap text-sm text-cyan-300">
+                {jobDetails.contactDetails || 'Message the poster directly in Ghost Market.'}
+              </p>
+            </div>
+            <div className="rounded-lg border border-white/15 bg-black/30 p-4">
+              <p className="text-xs text-gray-400">How To Apply</p>
+              <p className="mt-1 whitespace-pre-wrap text-sm text-gray-200">
+                {jobDetails.howToApply || 'Send a message with your profile, relevant work, and expected timeline.'}
+              </p>
+            </div>
           </div>
 
           <div className="mt-6 flex flex-wrap gap-2">
@@ -130,12 +151,14 @@ export default function JobDetailPage({ params }: JobPageProps) {
             ))}
           </div>
 
-          <Link
-            href={`/messages?to=${job.postedBy}`}
-            className="mt-6 inline-block rounded-lg bg-cyan-500 px-4 py-2 font-semibold text-black"
-          >
-            Message Poster
-          </Link>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              href={`/messages?to=${job.postedBy}`}
+              className="inline-block rounded-lg bg-cyan-500 px-4 py-2 font-semibold text-black"
+            >
+              Apply Via Message
+            </Link>
+          </div>
         </section>
       </div>
     </main>

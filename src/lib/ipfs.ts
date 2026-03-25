@@ -73,6 +73,8 @@ export const downloadFromIPFS = async (cid: string): Promise<string | null> => {
 export const uploadJobDescription = async (jobData: {
   title: string;
   description: string;
+  contactDetails: string;
+  howToApply?: string;
   requirements: string[];
   skills: string[];
   budget: number;
