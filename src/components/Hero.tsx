@@ -69,13 +69,42 @@ export default function Hero() {
         <div className="absolute top-1/3 left-1/2 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl opacity-30 animate-pulse animation-delay-4000" />
       </div>
 
+      {/* Subtle floating 16:9 video accent (kept outside main content flow) */}
+      <div className="pointer-events-none absolute right-4 bottom-8 z-10 hidden w-[min(44vw,560px)] aspect-video overflow-hidden rounded-2xl border border-white/20 bg-black/35 shadow-[0_20px_70px_-25px_rgba(34,211,238,0.45)] backdrop-blur-sm lg:block">
+        <video
+          src="https://rtvumsbcqxnqboosytgn.supabase.co/storage/v1/object/sign/job-media/ghostintrovideo.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zM2QzYzEyZC00ZmY0LTQ2OTAtYWU2Zi1kYWQ4NGM4MGJiOTQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJqb2ItbWVkaWEvZ2hvc3RpbnRyb3ZpZGVvLm1wNCIsImlhdCI6MTc3NDQ1MjY4MSwiZXhwIjozMTcxMzQ0NTI2ODF9.SWrrpnfEJX2vMDVcFWhxSmhVlk3AvDZ2czHP056j6sM"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover opacity-30 blur-sm scale-110"
+        />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <video
+            src="https://rtvumsbcqxnqboosytgn.supabase.co/storage/v1/object/sign/job-media/ghostintrovideo.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zM2QzYzEyZC00ZmY0LTQ2OTAtYWU2Zi1kYWQ4NGM4MGJiOTQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJqb2ItbWVkaWEvZ2hvc3RpbnRyb3ZpZGVvLm1wNCIsImlhdCI6MTc3NDQ1MjY4MSwiZXhwIjozMTcxMzQ0NTI2ODF9.SWrrpnfEJX2vMDVcFWhxSmhVlk3AvDZ2czHP056j6sM"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="h-full max-h-full w-auto object-contain opacity-80"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
+      </div>
+
       {/* Content */}
       <div className="relative z-20 flex flex-col items-center justify-center min-h-screen px-4 py-20">
         {/* Header with wallet info */}
         <div className="absolute top-0 left-0 right-0 flex justify-between items-center p-6 md:p-8">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">G</span>
+            <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-white/20 bg-white/10">
+              <Image
+                src="https://rtvumsbcqxnqboosytgn.supabase.co/storage/v1/object/sign/job-media/ghostlogo.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8zM2QzYzEyZC00ZmY0LTQ2OTAtYWU2Zi1kYWQ4NGM4MGJiOTQiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJqb2ItbWVkaWEvZ2hvc3Rsb2dvLnBuZyIsImlhdCI6MTc3NDQ1MTQ3MywiZXhwIjozMTcxMzQ0NTE0NzN9.cDhW7M9Z1ytiKe_ktwBZF0a6Y_sfl2NpV6Er6JnvJ4o"
+                alt="Ghost Market logo"
+                fill
+                unoptimized
+                className="object-cover"
+              />
             </div>
             <span className="text-xl font-bold text-white">Ghost Market</span>
           </div>
