@@ -48,16 +48,29 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-gray-950 via-purple-950/10 to-black">
+    <section className="relative isolate min-h-screen w-full overflow-hidden bg-gradient-to-b from-gray-950 via-purple-950/10 to-black">
+      {/* Full-bleed hero background image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="https://rtvumsbcqxnqboosytgn.supabase.co/storage/v1/object/public/job-media/hero-images/heroimage.png"
+          alt="Ghost Market background"
+          fill
+          priority
+          unoptimized
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/80" />
+      </div>
+
       {/* Animated background */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 z-10 overflow-hidden">
         <div className="absolute -top-1/2 -right-1/2 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl opacity-50 animate-pulse" />
         <div className="absolute -bottom-1/2 -left-1/2 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl opacity-50 animate-pulse animation-delay-2000" />
         <div className="absolute top-1/3 left-1/2 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl opacity-30 animate-pulse animation-delay-4000" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-20">
+      <div className="relative z-20 flex flex-col items-center justify-center min-h-screen px-4 py-20">
         {/* Header with wallet info */}
         <div className="absolute top-0 left-0 right-0 flex justify-between items-center p-6 md:p-8">
           <div className="flex items-center gap-2">
@@ -107,17 +120,6 @@ export default function Hero() {
             Post jobs, connect with talent, and transact securely—all without a central server touching your data.
           </p>
 
-          {/* Hero Image */}
-          <div className="relative w-full max-w-2xl mx-auto aspect-video rounded-2xl overflow-hidden border border-white/20 backdrop-blur-md bg-gradient-to-br from-white/10 to-white/5 shadow-2xl">
-            <Image
-              src="https://rtvumsbcqxnqboosytgn.supabase.co/storage/v1/object/public/job-media/hero-images/heroimage.png"
-              alt="Ghost Market Hero"
-              fill
-              className="object-cover"
-              priority
-              unoptimized
-            />
-          </div>
         </div>
 
         {/* CTA Buttons */}
